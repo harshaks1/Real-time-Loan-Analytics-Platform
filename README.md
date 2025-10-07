@@ -45,39 +45,8 @@ The dashboard refreshes every few seconds to display the latest information with
 
 Kafka Producer → Kafka Consumer → MySQL Database → Streamlit Dashboard
 
-yaml
-Copy code
 
----
 
-## 📁 Project Structure
-
-Real_Time_Loan_Analytics_Platform/
-│
-├── Loan_Analytics_Platform/
-│ ├── loan_dashboard.py # Main Streamlit App
-│ ├── kafka_consumer.py # Kafka Consumer Script
-│ ├── produce_test_events.py # Optional Kafka Producer Script
-│ ├── config/
-│ │ └── config.ini # MySQL Configuration
-│ └── init.py
-│
-├── assets/ # Dashboard Images
-│ ├── dashboard_header.png
-│ ├── loan_amount_chart.png
-│ ├── loan_count_pie.png
-│ ├── top_borrowers.png
-│ └── loan_table.png
-│
-├── requirements.txt
-└── README.md
-
-sql
-Copy code
-
-> ⚠️ **Note:** Ensure your images are located inside the `assets/` folder in the same directory as your `README.md`.
-
----
 
 ## 🧠 Database Setup (MySQL)
 
@@ -94,24 +63,21 @@ CREATE TABLE loan_events (
     status VARCHAR(50),
     timestamp BIGINT
 );
-Insert sample data:
 
-sql
-Copy code
-INSERT INTO loan_events VALUES
-('0001fd51-d74b-4b2d-9b05-dc4a56eac4cc','48246252-b839-4c3a-a877-6897a91edcb6',8033.79,'approved',1759488782),
-('000f328b-b57f-4bcf-8afa-a04858f1d934','c240cac8-ae91-4018-9a31-a764d066dd44',18220.50,'pending',1759488758);
-⚙️ Configuration Setup
+----
+
+## ⚙️ Configuration Setup
 Create a configuration file at:
 Loan_Analytics_Platform/config/config.ini
 
-ini
-Copy code
 [mysql]
 host=localhost
 database=loan_data
 user=root
 password=YOUR_MYSQL_PASSWORD
+
+-----
+
 🧩 Installation & Running the Project
 1️⃣ Clone the Repository
 bash
@@ -150,3 +116,4 @@ streamlit run Loan_Analytics_Platform/loan_dashboard.py
 9️⃣ Open in Browser
 Once Streamlit starts, visit:
 👉 http://localhost:8501
+
