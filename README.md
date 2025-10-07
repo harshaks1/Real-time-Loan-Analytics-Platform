@@ -65,21 +65,25 @@ CREATE TABLE loan_events (
   timestamp BIGINT
 );
 
-
-⚙️ Configuration Setup
+## ⚙️ Configuration Setup
 
 Create a configuration file at:
 
 Loan_Analytics_Platform/config/config.ini
 
+makefile
+Copy code
 
 Add the following content:
 
+```ini
 [mysql]
 host=localhost
 database=loan_data
 user=root
 password=YOUR_MYSQL_PASSWORD
+
+
 
 🧩 Installation & Running the Project
 1️⃣ Clone the Repository
@@ -117,5 +121,6 @@ streamlit run Loan_Analytics_Platform/loan_dashboard.py
 Once Streamlit starts, open:
 
 👉 http://localhost:8501
+
 
 
