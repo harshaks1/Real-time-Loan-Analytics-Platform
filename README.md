@@ -48,11 +48,10 @@ Kafka Producer → Kafka Consumer → MySQL Database → Streamlit Dashboard
 
 
 
-## 🧠 Database Setup (MySQL)
+🧠 Database Setup (MySQL)
 
 Before running the app, create the database and table:
 
-```sql
 CREATE DATABASE loan_data;
 USE loan_data;
 
@@ -63,6 +62,10 @@ CREATE TABLE loan_events (
     status VARCHAR(50),
     timestamp BIGINT
 );
+
+
+
+
 
 
 ⚙️ Configuration Setup
@@ -78,34 +81,65 @@ password=YOUR_MYSQL_PASSWORD
 
 
 
+
+
 🧩 Installation & Running the Project
+
+
+
+
 1️⃣ Clone the Repository
 git clone https://github.com/<your-username>/Real_Time_Loan_Analytics_Platform.git
 cd Real_Time_Loan_Analytics_Platform
+
+
+
 
 2️⃣ Create & Activate Virtual Environment
 python -m venv venv
 venv\Scripts\activate     # For Windows
 
+
+
+
 3️⃣ Install Dependencies
 pip install -r requirements.txt
+
+
+
 
 4️⃣ Start MySQL Server
 
 Ensure your MySQL service is running and accessible.
 
+
+
+
 5️⃣ Start Kafka and Zookeeper
 zookeeper-server-start.bat config/zookeeper.properties
 kafka-server-start.bat config/server.properties
 
+
+
+
 6️⃣ Run Kafka Producer (optional for live data)
 python Loan_Analytics_Platform/produce_test_events.py
+
+
+
 
 7️⃣ Run Kafka Consumer
 python Loan_Analytics_Platform/kafka_consumer.py
 
+
+
+
 8️⃣ Launch Streamlit Dashboard
 streamlit run Loan_Analytics_Platform/loan_dashboard.py
+
+
+
+
 
 9️⃣ Open in Browser
 
