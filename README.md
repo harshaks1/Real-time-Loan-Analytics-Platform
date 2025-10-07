@@ -1,177 +1,151 @@
-# 💫 Real-Time Loan Analytics Dashboard
+# 💰 Real-Time Loan Analytics Platform
 
-## 📘 Project Description
-The **Real-Time Loan Analytics Dashboard** is a **Streamlit-based web application** designed to visualize **live loan event data** from **Kafka → MySQL → Streamlit** in real time.  
-It enables organizations to **track loan activities**, **monitor approvals**, **analyze borrower trends**, and **make data-driven decisions** using continuously updating data.
+A **real-time financial analytics dashboard** built using **Streamlit**, **MySQL**, and **Apache Kafka**.  
+This platform provides **live loan insights**, interactive charts, and key performance metrics for loan management systems.
 
-The system automatically refreshes every few seconds to reflect the latest loan transactions, ensuring users always view the most current insights — **no manual refresh needed**.
+---
+
+## 🚀 Project Overview
+
+The **Real-Time Loan Analytics Platform** is designed to continuously track loan data streamed from a Kafka producer and consumed by a Kafka consumer.  
+All data is updated dynamically in **real-time** and visualized on a modern Streamlit dashboard.
 
 ---
 
 ## 🎯 Key Features
-- ⚡ **Real-time data streaming** from MySQL  
-- 📊 **Interactive analytics** using Plotly (Bar, Pie, and Line charts)  
-- 💳 **KPI metrics** showing Total Loans, Approved, Pending, and Average Loan Value  
-- 🏆 **Top borrower ranking** based on loan amount  
-- 🔍 **Search and filter** functionality for granular insights  
-- 🎨 **Modern dark theme** with neon highlights for better readability  
-- 🔄 **Auto-refresh** every 10 seconds for live updates  
+
+- ⚡ **Real-time data streaming** from **Kafka → MySQL → Streamlit**
+- 🧠 **Kafka Consumer Integration** for continuous live loan data updates
+- 📊 **Interactive Visualizations** (Bar, Pie, Line charts) with Plotly
+- 💳 **Live KPIs:** Total Loans, Approved, Pending, Average Loan Value
+- 🏆 **Top Borrowers** ranked by Loan Amount
+- 🔍 **Search & Filter** functionality for loan data
+- 🎨 **Dark Mode UI** with Neon Highlights
+- 🔄 **Auto-refresh every 10 seconds** (powered by `streamlit-autorefresh`)
 
 ---
 
-## 🧠 Tech Stack
+## 🧱 Tech Stack
 
 | Layer | Technology |
 |--------|-------------|
-| Frontend | Streamlit |
-| Visualization | Plotly |
-| Backend | Python (MySQL Connector) |
-| Database | MySQL |
-| Real-Time Data Source | Kafka *(optional)* |
-| Styling | Custom CSS in Streamlit |
+| **Frontend** | Streamlit |
+| **Visualization** | Plotly |
+| **Backend** | Python (MySQL Connector, Kafka Consumer) |
+| **Database** | MySQL |
+| **Real-Time Source** | Apache Kafka |
+| **Styling** | Custom Streamlit CSS |
 
 ---
 
-## ⚙️ Project Requirements
+## 🗄️ Data Flow Architecture
 
-### 🧰 Software Requirements
-- **Python** 3.10 or higher  
-- **MySQL Server** 8.0 or above  
-- **Kafka** *(optional for data simulation)*  
-- **VS Code / PyCharm** (recommended IDE)
+Kafka Producer → Kafka Consumer → MySQL Database → Streamlit Dashboard
+
+yaml
+Copy code
 
 ---
 
-### 🧩 Python Libraries
+## 🏗️ Project Structure
 
-Install all required dependencies:
-
-```bash
-pip install streamlit pandas mysql-connector-python plotly streamlit-autorefresh numpy
-Optional (recommended):
-
-bash
-Copy code
-pip install python-dotenv openpyxl requests
-🗄️ Database Setup (MySQL)
-1️⃣ Create Database and Table
-sql
-Copy code
-CREATE DATABASE loan_data;
-USE loan_data;
-
-CREATE TABLE loan_events (
-    loan_id VARCHAR(255) PRIMARY KEY,
-    user_id VARCHAR(255),
-    amount DECIMAL(10,2),
-    status VARCHAR(50),
-    timestamp BIGINT
-);
-2️⃣ Insert Sample Data
-sql
-Copy code
-INSERT INTO loan_events VALUES
-('0001fd51-d74b-4b2d-9b05-dc4a56eac4cc','48246252-b839-4c3a-a877-6897a91edcb6',8033.79,'approved',1759488782),
-('000f328b-b57f-4bcf-8afa-a04858f1d934','c240cac8-ae91-4018-9a31-a764d066dd44',18220.50,'pending',1759488758);
-⚙️ Configuration Setup
-Create a configuration file with your MySQL credentials:
-
-Path:
-
-arduino
-Copy code
-D:\Real_Time_Loan_Analytics_Platform\Loan_Analytics_Platform\config\config.ini
-Content:
-
-ini
-Copy code
-[mysql]
-host=localhost
-database=loan_data
-user=root
-password=YOUR_MYSQL_PASSWORD
-📁 Project Structure
-bash
-Copy code
 Real_Time_Loan_Analytics_Platform/
+│
 ├── Loan_Analytics_Platform/
-│   ├── loan_dashboard.py            # Main Streamlit app
-│   ├── config/
-│   │   └── config.ini               # MySQL credentials
-│   ├── __init__.py
-│   ├── kafka_consumer.py            # (optional for Kafka integration)
-│   └── produce_test_events.py       # (optional for test data generation)
+│ ├── loan_dashboard.py
+│ ├── kafka_consumer.py
+│ ├── database_config.py
+│ └── utils/
+│
 ├── assets/
-│   ├── dashboard_header.png
-│   ├── loan_amount_chart.png
-│   ├── loan_count_pie.png
-│   ├── top_borrowers.png
-│   └── loan_table.png
-├── README.md
-└── requirements.txt
-🚀 How to Run the Project Locally
-Step 1: Open the Project Folder
-bash
+│ ├── dashboard_header.png
+│ ├── loan_amount_chart.png
+│ ├── loan_count_pie.png
+│ ├── top_borrowers.png
+│ └── loan_table.png
+│
+├── requirements.txt
+└── README.md
+
+yaml
 Copy code
-cd D:\Real_Time_Loan_Analytics_Platform\Loan_Analytics_Platform
-Step 2: Activate Virtual Environment
-powershell
-Copy code
-D:\Real_Time_Loan_Analytics_Platform\venv_streamlit\Scripts\Activate.ps1
-Step 3: Install Dependencies
+
+---
+
+## 🖼️ Dashboard Preview
+
+### 🏠 Dashboard Header & KPIs  
+Displays real-time KPIs: **Total Loans**, **Approved Loans**, **Pending Loans**, **Approval Rate**, and **Average Loan Amount**.
+
+![Dashboard Header](assets/dashboard_header.png)
+
+---
+
+### 💵 Loan Amount by Status  
+Interactive bar chart comparing total loan amounts by status (Approved / Pending).
+
+![Loan Amount Chart](assets/loan_amount_chart.png)
+
+---
+
+### 🥧 Loan Count by Status  
+Live pie chart showing the ratio of approved vs pending loans.
+
+![Loan Count Pie](assets/loan_count_pie.png)
+
+---
+
+### 🏆 Top Borrowers  
+List of borrowers with the highest loan amounts, updated in real-time.
+
+![Top Borrowers](assets/top_borrowers.png)
+
+---
+
+### 📋 Loan Details Table  
+Complete table of all loan records streamed via Kafka and stored in MySQL.
+
+![Loan Table](assets/loan_table.png)
+
+---
+
+## ⚙️ How to Run the Project
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/<your-username>/Real_Time_Loan_Analytics_Platform.git
+cd Real_Time_Loan_Analytics_Platform
+2️⃣ Install Dependencies
 bash
 Copy code
 pip install -r requirements.txt
-Step 4: Verify Database Connection
-Ensure MySQL is running and the loan_data database is configured correctly.
-
-Step 5: Run the Streamlit Application
+3️⃣ Start Kafka & Zookeeper
 bash
 Copy code
-streamlit run loan_dashboard.py
-Step 6: Open in Browser
-Once Streamlit starts, open:
-👉 http://localhost:8501
-----
+zookeeper-server-start.bat config/zookeeper.properties
+kafka-server-start.bat config/server.properties
+4️⃣ Run Kafka Producer (to stream loan data)
+bash
+Copy code
+python kafka_producer.py
+5️⃣ Run Kafka Consumer (to push data into MySQL)
+bash
+Copy code
+python kafka_consumer.py
+6️⃣ Launch Streamlit Dashboard
+bash
+Copy code
+streamlit run Loan_Analytics_Platform/loan_dashboard.py
+📡 Real-Time Data Flow
+Producer: Streams new loan applications into Kafka topics
 
-## 🧮 Dashboard Outputs
+Consumer: Reads those messages and inserts them into MySQL
 
-### 📊 1️⃣ Dashboard Header and KPIs
-Displays total loans, approved loans, pending loans, approval rate, and average loan amount.  
-These metrics auto-update every few seconds.
+Streamlit App: Fetches and visualizes the data live every few seconds
 
-![Dashboard Header](./assets/dashboard_header.png)  
-*Figure 1: Real-Time Loan Dashboard Header displaying live KPIs.*
+🧩 Future Enhancements
+🔐 Add user authentication and role-based access
 
----
+📈 Integrate more ML models for loan default prediction
 
-### 💵 2️⃣ Loan Amount by Status
-An interactive bar chart comparing total loan amounts by their current approval status (Approved / Pending).
-
-![Loan Amount Chart](./assets/loan_amount_chart.png)  
-*Figure 2: Loan Amount Distribution by Status.*
-
----
-
-### 🥧 3️⃣ Loan Count by Status
-A live pie chart representing the ratio of approved and pending loans.
-
-![Loan Count Pie](./assets/loan_count_pie.png)  
-*Figure 3: Percentage breakdown of loan statuses.*
-
----
-
-### 🏆 4️⃣ Top Borrowers
-A ranked list of the top 5 borrowers based on loan amount, helping identify high-value customers.
-
-![Top Borrowers](./assets/top_borrowers.png)  
-*Figure 4: Top Borrowers by Loan Amount.*
-
----
-
-### 📋 5️⃣ Detailed Loan Data Table
-A searchable and filterable table that allows users to view all loan records in real time.
-
-![Loan Table](./assets/loan_table.png)  
-*Figure 5: Detailed Loan Data Table with filtering options.*
-
+☁️ Deploy using AWS (EC2, RDS, MSK) or Docker
