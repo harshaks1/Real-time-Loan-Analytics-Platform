@@ -1,49 +1,157 @@
-# Spark Structured Streaming Demo
-[Spark Structured Streaming](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) data pipeline that processes movie ratings data in real-time.
+# 💫 Real-Time Loan Analytics Dashboard
 
-Consumes events from a Kafka topic in Avro, transforms and writes to an [Apache Iceberg](https://iceberg.apache.org/) table.
+## 📘 Project Description
+The **Real-Time Loan Analytics Dashboard** is a Streamlit-based web application designed to visualize **live loan event data** from **Kafka → MySQL → Streamlit** in real time.  
 
-The pipeline handles updates and duplicate events by merging to the destination table based on the `event_id`.
+It allows teams to monitor and analyze key metrics such as **total loans**, **approved and pending loans**, **average loan amount**, and **top borrowers**.  
+The system automatically refreshes every few seconds, ensuring users always see the most up-to-date loan activity.
 
-Late arriving events from more than 5 days ago are discarded (for performance reasons in the merge - to leverage partitioning and avoid full scans).
+---
 
-## Data Architecture
-<img width="1731" alt="image" src="https://github.com/user-attachments/assets/79551b02-e192-4203-9d6b-2ce07253056f" />
+## 🎯 Key Features
+- ⚡ Real-time loan data integration from MySQL  
+- 📊 Interactive visualizations using Plotly (Bar, Pie, and Line charts)  
+- 💳 KPI metrics (Total Loans, Approved, Pending, Average Loan Amount, etc.)  
+- 🏆 Top borrowers ranked by loan amount  
+- 🔍 Search and filter functionality for detailed loan data  
+- 🎨 Sleek dark theme with neon accents  
+- 🔄 Auto-refresh every 10 seconds for live updates  
 
-## Local setup
-We spin up a local Kafka cluster with Schema Registry based on the [Docker Compose file provided by Confluent](https://github.com/confluentinc/cp-all-in-one/blob/8.0.0-post/cp-all-in-one-community/docker-compose.yml).
+---
 
-We install a local Spark Structured Streaming app using uv.
+## 🧠 Tech Stack
 
-## Dependency management
-Dependabot is configured to periodically upgrade repo dependencies. See [dependabot.yml](.github/dependabot.yml).
+| Layer | Technology Used |
+|--------|------------------|
+| Frontend | Streamlit |
+| Visualization | Plotly |
+| Backend | Python (MySQL Connector) |
+| Database | MySQL |
+| Real-Time Data Source | Kafka (optional) |
+| Styling | Custom CSS inside Streamlit |
 
-## Running instructions
-Run the following commands in order:
-* `make setup` to install the Spark Structured Streaming app on a local Python env.
-* `make kafka-up` to start local Kafka in Docker.
-* `make kafka-create-topic` to create the Kafka topic we will use.
-* `make kafka-produce-test-events` to start writing messages to the topic.
+---
 
-On a separate console, run:
-* `make streaming-app-run` to start the Spark Structured Streaming app.
+## ⚙️ Project Requirements
 
-On a separate console, you can check the output dataset by running:
-```python
-$ make pyspark
->>> df = spark.read.table("movie_ratings")
->>> df.show()
-+--------------------+--------------------+--------------------+------+-----------+----------------+-----------+
-|            event_id|             user_id|            movie_id|rating|is_approved|rating_timestamp|rating_date|
-+--------------------+--------------------+--------------------+------+-----------+----------------+-----------+
-|a41847d0-37de-11f...|a418482a-37de-11f...|a418483e-37de-11f...|   1.8|      false|      1748008982| 2025-05-23|
-|a46519c0-37de-11f...|a4651a42-37de-11f...|a4651a60-37de-11f...|   6.9|      false|      1748008982| 2025-05-23|
-|a4c15a50-37de-11f...|a4c15ac8-37de-11f...|a4c15ae6-37de-11f...|   5.0|      false|      1748008983| 2025-05-23|
-|a79b2b98-37de-11f...|a79b2c10-37de-11f...|a79b2c2e-37de-11f...|   4.0|      false|      1748008988| 2025-05-23|
-+--------------------+--------------------+--------------------+------+-----------+----------------+-----------+
-```
+### 🧰 Software Requirements
+- **Python** 3.10 or above  
+- **MySQL Server** 8.0 or above  
+- **Kafka** (optional, for streaming simulation)  
+- **VS Code / PyCharm** (for local development)
 
-## Table internal maintenance
-The streaming microbatches can produce many small files and constant table snapshots.
+### 🧩 Python Libraries
+Install the following packages:
 
-In order to tackle these issues, the recommended Iceberg table maintenance operations can be used, [see doc](https://iceberg.apache.org/docs/latest/spark-structured-streaming/#maintenance-for-streaming-tables).
+```bash
+pip install streamlit pandas mysql-connector-python plotly streamlit-autorefresh numpy
+(Optional but recommended):
+
+bash
+Copy code
+pip install python-dotenv openpyxl requests
+🗄️ Database Setup (MySQL)
+Open MySQL Command Line or MySQL Workbench.
+
+Create the database:
+
+
+CREATE DATABASE loan_data;
+USE loan_data;
+Create the loan_events table:
+
+
+CREATE TABLE loan_events (
+    loan_id VARCHAR(255) PRIMARY KEY,
+    user_id VARCHAR(255),
+    amount DECIMAL(10,2),
+    status VARCHAR(50),
+    timestamp BIGINT
+);
+Insert some sample data:
+
+sql
+Copy code
+INSERT INTO loan_events VALUES
+('0001fd51-d74b-4b2d-9b05-dc4a56eac4cc','48246252-b839-4c3a-a877-6897a91edcb6',8033.79,'approved',1759488782),
+('000f328b-b57f-4bcf-8afa-a04858f1d934','c240cac8-ae91-4018-9a31-a764d066dd44',18220.50,'pending',1759488758);
+⚙️ Configuration Setup
+Create a configuration file for your MySQL credentials:
+Path:
+
+arduino
+Copy code
+D:\Real_Time_Loan_Analytics_Platform\Loan_Analytics_Platform\config\config.ini
+Content:
+
+ini
+Copy code
+[mysql]
+host=localhost
+database=loan_data
+user=root
+password=YOUR_MYSQL_PASSWORD
+📁 Project Structure
+bash
+Copy code
+Real_Time_Loan_Analytics_Platform/
+├── Loan_Analytics_Platform/
+│   ├── loan_dashboard.py            # Main Streamlit app
+│   ├── config/
+│   │   └── config.ini               # MySQL credentials
+│   ├── __init__.py
+│   ├── kafka_consumer.py            # (optional) Kafka consumer script
+│   └── produce_test_events.py       # (optional) Data producer
+├── venv_streamlit/                  # Virtual environment
+├── README.md
+└── requirements.txt
+🚀 How to Run the Project Locally
+Step 1: Open your project
+bash
+Copy code
+cd D:\Real_Time_Loan_Analytics_Platform\Loan_Analytics_Platform
+Step 2: Activate the virtual environment
+powershell
+Copy code
+D:\Real_Time_Loan_Analytics_Platform\venv_streamlit\Scripts\Activate.ps1
+Step 3: Install dependencies
+bash
+Copy code
+pip install -r requirements.txt
+Step 4: Verify MySQL connection
+Ensure your MySQL server is running and the loan_data database exists.
+
+Step 5: Run the Streamlit dashboard
+bash
+Copy code
+streamlit run loan_dashboard.py
+Step 6: Open in your browser
+Once Streamlit launches, open:
+
+arduino
+Copy code
+http://localhost:8501
+🧮 Dashboard Outputs
+📊 Dashboard Header and KPIs
+Displays total loans, approved loans, pending loans, approval rate, and average loan amount.
+📸 [Insert Screenshot: Dashboard Header]
+
+💵 Loan Amount by Status
+Interactive bar chart comparing total loan amounts by approval status.
+📸 [Insert Screenshot: Loan Amount Chart]
+
+🥧 Loan Count by Status
+Pie chart showing the proportion of approved vs. pending loans.
+📸 [Insert Screenshot: Loan Count Pie Chart]
+
+📈 Average Loan Trend
+Line chart showing variations in average loan amounts over time.
+📸 [Insert Screenshot: Loan Trend Chart]
+
+🏆 Top Borrowers Table
+List of top 5 borrowers based on loan amount.
+📸 [Insert Screenshot: Top Borrowers Table]
+
+📋 Detailed Loan Data
+Searchable and filterable table for all loan entries.
+📸 [Insert Screenshot: Loan Data Table]
