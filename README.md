@@ -82,45 +82,69 @@ host=localhost
 database=loan_data
 user=root
 password=YOUR_MYSQL_PASSWORD
-
-
-
 🧩 Installation & Running the Project
 1️⃣ Clone the Repository
+bash
+Copy code
 git clone https://github.com/YourUsername/Real_Time_Loan_Analytics_Platform.git
 cd Real_Time_Loan_Analytics_Platform
-
 2️⃣ Create & Activate Virtual Environment
+bash
+Copy code
 python -m venv venv
-venv\Scripts\activate   # For Windows
-# OR
-source venv/bin/activate  # For macOS/Linux
-
+▶️ For Windows:
+bash
+Copy code
+venv\Scripts\activate
+▶️ For macOS/Linux:
+bash
+Copy code
+source venv/bin/activate
 3️⃣ Install Dependencies
+bash
+Copy code
 pip install -r requirements.txt
-
 4️⃣ Start MySQL Server
-
 Ensure your MySQL service is running and accessible.
 
 5️⃣ Start Kafka and Zookeeper
+▶️ For Windows:
+bash
+Copy code
 zookeeper-server-start.bat config/zookeeper.properties
 kafka-server-start.bat config/server.properties
-
+▶️ For macOS/Linux:
+bash
+Copy code
+zookeeper-server-start.sh config/zookeeper.properties
+kafka-server-start.sh config/server.properties
 6️⃣ Run Kafka Producer (optional for live data)
+bash
+Copy code
 python Loan_Analytics_Platform/produce_test_events.py
-
 7️⃣ Run Kafka Consumer
+bash
+Copy code
 python Loan_Analytics_Platform/kafka_consumer.py
-
 8️⃣ Launch Streamlit Dashboard
+bash
+Copy code
 streamlit run Loan_Analytics_Platform/loan_dashboard.py
-
 9️⃣ Open in Browser
-
 Once Streamlit starts, open:
 
 👉 http://localhost:8501
+
+yaml
+Copy code
+
+---
+
+
+
+
+
+
 
 
 
